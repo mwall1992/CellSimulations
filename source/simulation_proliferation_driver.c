@@ -65,9 +65,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// deallocate memory
-	lattice_destroy(&lattice, rows, columns);
-	free(agentId);
-	// free(blockingAgentId);
+	lattice_destroy(&lattice, rows, columns, true);
 	free(trackedAgentIds);
 
 	for (int i = 0; i < timeSteps; i++) {

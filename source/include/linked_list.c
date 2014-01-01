@@ -1,6 +1,14 @@
 #include "linked_list.h"
 #include <stdlib.h>
 
+#include <stdio.h>
+
+/* Interface */
+
+void linked_list_free_node_memory(node_t* node, bool const freeNodeValue);
+
+/* Implementation */
+
 node_t* linked_list_create() {
 	node_t* list = (node_t*)malloc(sizeof(node_t));
 	list->value = NULL;
@@ -8,8 +16,8 @@ node_t* linked_list_create() {
 	return list;
 }
 
-void linked_list_destroy(node_t** list) {
-	*list = linked_list_clear(*list);
+void linked_list_destroy(node_t** list, bool const freeMemory) {
+	*list = linked_list_clear(*list, freeMemory);
 	free(*list);
 	*list = NULL;
 }
@@ -48,7 +56,9 @@ node_t* linked_list_push(node_t* list, void* value) {
 	return list;
 }
 
-node_t* linked_list_delete(node_t* list, unsigned int index, bool* deleted) {
+node_t* linked_list_delete(node_t* list, unsigned int index, bool* deleted, 
+	bool const freeMemory) {
+
 	*deleted  = true;
 	unsigned int listSize = linked_list_size(list);
 
@@ -64,7 +74,11 @@ node_t* linked_list_delete(node_t* list, unsigned int index, bool* deleted) {
 		if (currentParent) {
 			list = currentParent;
 			currentParent->next = currentNode->next;
-			//free(currentNode->value);
+			
+			if (freeMemory) {
+				free(currentNode->value);
+			}
+			
 			free(currentNode);
 			currentNode = NULL;
 		} else {
@@ -83,16 +97,18 @@ node_t* linked_list_delete(node_t* list, unsigned int index, bool* deleted) {
 	return list;
 }
 
-node_t* linked_list_clear(node_t* list) {
+node_t* linked_list_clear(node_t* list, bool const freeMemory) {
 	node_t* oldHead = NULL;
 	node_t* currentHead = list;
 
 	while (currentHead->next) {
 		oldHead = currentHead;
 		currentHead = currentHead->next;
-		//free(oldHead->value);
-		free(oldHead);
-		oldHead = NULL;
+		linked_list_free_node_memory(oldHead, freeMemory);
+	}
+
+	if (currentHead->value && freeMemory) {
+		free(currentHead->value);
 	}
 	currentHead->value = NULL;
 
@@ -112,4 +128,11 @@ unsigned int linked_list_size(node_t* list) {
 		currentNode = currentNode->next;
 	}
 	return size;
+}
+
+void linked_list_free_node_memory(node_t* node, bool const freeNodeValue) {
+	if (freeNodeValue) {
+		free(node->value);
+	}
+	free(node);
 }

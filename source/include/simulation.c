@@ -159,7 +159,7 @@ void performProliferationEvents(lattice_t* lattice, unsigned int rows,
 					*parentCoord);
 				agentPosition = *parentCoord;
 
-				// Memory leak!
+				// N.B. Be sure to free agent id memory via lattice
 				int* daughterId = malloc(sizeof(int));
 				*daughterId = ++currentAgentCount;
 				lattice_push_agent(lattice, *daughterCoord, daughterId);

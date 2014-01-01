@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 			coord.row = i;
 			coord.column = j;
 
-			// memory leak
+			// N.B. Be sure to free agent memory in lattice
 			agentId = malloc(sizeof(int));
 			*agentId = currentAgentCount++;
 
@@ -95,8 +95,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// deallocate memory
-	lattice_destroy(&lattice, rows, columns);
-	free(agentId);
+	lattice_destroy(&lattice, rows, columns, true);
 	free(trackedAgentIds);
 
 	for (int i = 0; i < timeSteps + 1; i++) {

@@ -105,5 +105,8 @@ int main(int argc, char* argv[]) {
 
 	printf("--------------------------\n");
 
+	lattice_destroy(&periodic_lattice, rows, columns, true);
+	lattice_destroy(&reflective_lattice, rows, columns, true);
+
 	return EXIT_SUCCESS;
 }

@@ -46,10 +46,10 @@ lattice_t* lattice_create(unsigned int rows, unsigned int columns,
 	boundary_t lowerVerticalBoundary, boundary_t upperVerticalBoundary);
 
 void lattice_destroy(lattice_t** lattice, unsigned int rows, 
-	unsigned int columns);
+	unsigned int columns, bool const freeMemory);
 
 void lattice_clear(lattice_t* lattice, unsigned int rows, 
-	unsigned int columns);
+	unsigned int columns, bool const freeMemory);
 
 void* lattice_get_agent(lattice_t* lattice, coordinate_t coord,
 	unsigned int index);
@@ -64,12 +64,13 @@ void lattice_push_agent(lattice_t* lattice, coordinate_t coord,
 	void* value);
 
 void lattice_delete_agent(lattice_t* lattice, coordinate_t coord, 
-	unsigned int index);
+	unsigned int index, bool const freeMemory);
 
 void lattice_move_agent(lattice_t* lattice, coordinate_t oldPosition,
 	unsigned int oldIndex, coordinate_t newPosition);
 
-void lattice_clear_agents(lattice_t* lattice, coordinate_t coord);
+void lattice_clear_agents(lattice_t* lattice, coordinate_t coord, 
+	bool const freeMemory);
 
 coordinate_t retrieve_adjacent_coord(lattice_t* lattice, 
 	unsigned int rows, unsigned int columns, coordinate_t anchor,

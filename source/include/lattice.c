@@ -35,12 +35,12 @@ lattice_t* lattice_create(unsigned int rows, unsigned int columns,
 }
 
 void lattice_destroy(lattice_t** lattice, unsigned int rows, 
-	unsigned int columns) {
+	unsigned int columns, bool const freeMemory) {
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
 			point_t* point = (*(*lattice)->mesh)[i][j];
-			linked_list_destroy(&point->agentList);
+			linked_list_destroy(&point->agentList, freeMemory);
 			free(point);
 		}
 		free((*(*lattice)->mesh)[i]);
@@ -52,14 +52,14 @@ void lattice_destroy(lattice_t** lattice, unsigned int rows,
 }
 
 void lattice_clear(lattice_t* lattice, unsigned int rows, 
-	unsigned int columns) {
+	unsigned int columns, bool const freeMemory) {
 
 	coordinate_t coord;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
 			coord.row = i;
 			coord.column = j;
-			lattice_clear_agents(lattice, coord);
+			lattice_clear_agents(lattice, coord, freeMemory);
 		}
 	}
 }
@@ -103,12 +103,13 @@ void lattice_push_agent(lattice_t* lattice, coordinate_t coord,
 }
 
 void lattice_delete_agent(lattice_t* lattice, coordinate_t coord, 
-	unsigned int index) {
+	unsigned int index, bool const freeMemory) {
 
 	bool* deleted = (bool*)malloc(sizeof(bool));
 
 	point_t* point = (*lattice->mesh)[coord.row][coord.column];
-	point->agentList = linked_list_delete(point->agentList, index, deleted);
+	point->agentList = linked_list_delete(point->agentList, index, deleted, 
+		freeMemory);
 
 	if (*deleted) {
 		point->numAgents--;
@@ -120,14 +121,17 @@ void lattice_delete_agent(lattice_t* lattice, coordinate_t coord,
 void lattice_move_agent(lattice_t* lattice, coordinate_t oldPosition,
 	unsigned int oldIndex, coordinate_t newPosition) {
 
+	bool const kFreeAgentMemory = false;
+
 	void* value = lattice_get_agent(lattice, oldPosition, oldIndex);
 	lattice_push_agent(lattice, newPosition, value);
-	lattice_delete_agent(lattice, oldPosition, oldIndex);
+	lattice_delete_agent(lattice, oldPosition, oldIndex, kFreeAgentMemory);
 }
 
-void lattice_clear_agents(lattice_t* lattice, coordinate_t coord) {
+void lattice_clear_agents(lattice_t* lattice, coordinate_t coord, 
+	bool const freeMemory) {
 	point_t* point = (*lattice->mesh)[coord.row][coord.column];
-	point->agentList = linked_list_clear(point->agentList);
+	point->agentList = linked_list_clear(point->agentList, freeMemory);
 	point->numAgents = 0;
 }
 

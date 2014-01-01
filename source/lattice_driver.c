@@ -49,15 +49,15 @@ int main(int argc, char* argv[]) {
 
 	coord.row = 1;
 	coord.column = 1;
-	lattice_delete_agent(lattice, coord, 0);
+	lattice_delete_agent(lattice, coord, 0, false);
 
 	coord.row = 0;
 	coord.column = 0;
-	lattice_delete_agent(lattice, coord, 0);
+	lattice_delete_agent(lattice, coord, 0, false);
 
 	coord.row = 2;
 	coord.column = 0;
-	lattice_delete_agent(lattice, coord, 0);
+	lattice_delete_agent(lattice, coord, 0, false);
 
 	printf("-------------------------\n");
 
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
 
 	coord.row = 2;
 	coord.column = 1;
-	lattice_clear_agents(lattice, coord);
+	lattice_clear_agents(lattice, coord, false);
 
 	printf("-------------------------\n");
 
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 
 	printf("-------------------------\n");
 
-	lattice_clear(lattice, rows, columns);
+	lattice_clear(lattice, rows, columns, false);
 
 	printf("-------------------------\n");
 
@@ -157,15 +157,15 @@ int main(int argc, char* argv[]) {
 
 	coord.row = 1;
 	coord.column = 1;
-	lattice_delete_agent(lattice, coord, 0);
+	lattice_delete_agent(lattice, coord, 0, false);
 
 	coord.row = 0;
 	coord.column = 0;
-	lattice_delete_agent(lattice, coord, 1);
+	lattice_delete_agent(lattice, coord, 1, false);
 
 	coord.row = 2;
 	coord.column = 0;
-	lattice_delete_agent(lattice, coord, 1);
+	lattice_delete_agent(lattice, coord, 1, false);
 
 	printf("-------------------------\n");
 
@@ -189,7 +189,7 @@ int main(int argc, char* argv[]) {
 
 	coord.row = 2;
 	coord.column = 1;
-	lattice_clear_agents(lattice, coord);
+	lattice_clear_agents(lattice, coord, false);
 
 	printf("-------------------------\n");
 
@@ -223,7 +223,7 @@ int main(int argc, char* argv[]) {
 		printf("******************\n");
 	}
 
-	lattice_clear(lattice, rows, columns);
+	lattice_clear(lattice, rows, columns, false);
 
 	printf("-------------------------\n");
 
@@ -245,7 +245,7 @@ int main(int argc, char* argv[]) {
 
 	printf("-------------------------\n");
 
-	lattice_destroy(&lattice, rows, columns);
+	lattice_destroy(&lattice, rows, columns, true);
 
 	if (lattice) {
 		printf("After destroy: %p\n", lattice);
