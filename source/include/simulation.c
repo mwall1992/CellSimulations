@@ -19,17 +19,11 @@ void performMotilityEvents(lattice_t* lattice, unsigned int rows,
 	int randomNumbersCount = initialAgentCount * RANDOM_NUMS_PER_EVENT;
 
 	// generate any required random numbers (uniform dist)
-	// float randomNumbers[randomNumbersCount];
-	// VSLStreamStatePtr stream;
-	// vslNewStream(&stream, BRNG, arc4random());
-	// vsRngUniform(VSL_RNG_METHOD_UNIFORM_STD, stream, 
-	// 	randomNumbersCount, randomNumbers, (float)1.0, 
-	// 	(float)initialAgentCount);
-
-	float* randomNumbers = malloc(randomNumbersCount * sizeof(float));
-	for (int i = 0; i < randomNumbersCount; i++) {
-		randomNumbers[i] = (arc4random() % 100) / 100.0f;
-	}
+	float randomNumbers[randomNumbersCount];
+	VSLStreamStatePtr stream;
+	vslNewStream(&stream, BRNG, arc4random());
+	vsRngUniform(VSL_RNG_METHOD_UNIFORM_STD, stream, 
+		randomNumbersCount, randomNumbers, 0.0f, 1.0f);
 
 	// perform a series of motility events
 	unsigned int agentNum;
@@ -97,17 +91,11 @@ void performProliferationEvents(lattice_t* lattice, unsigned int rows,
 	int randomNumbersCount = initialAgentCount * RANDOM_NUMS_PER_EVENT;
 
 	// generate any required random numbers (uniform dist)
-	// float randomNumbers[randomNumbersCount];
-	// VSLStreamStatePtr stream;
-	// vslNewStream(&stream, BRNG, arc4random());
-	// vsRngUniform(VSL_RNG_METHOD_UNIFORM_STD, stream, 
-	// 	randomNumbersCount, randomNumbers, (float)1.0, 
-	// 	(float)initialAgentCount);
-
-	float* randomNumbers = malloc(randomNumbersCount * sizeof(float));
-	for (int i = 0; i < randomNumbersCount; i++) {
-		randomNumbers[i] = (arc4random() % 100) / 100.0f;
-	}
+	float randomNumbers[randomNumbersCount];
+	VSLStreamStatePtr stream;
+	vslNewStream(&stream, BRNG, arc4random());
+	vsRngUniform(VSL_RNG_METHOD_UNIFORM_STD, stream, 
+		randomNumbersCount, randomNumbers, 0.0f, 1.0f);
 
 	// perform a series of proliferation events
 	unsigned int currentAgentCount = initialAgentCount;
