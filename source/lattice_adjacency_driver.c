@@ -26,14 +26,14 @@ int main(int argc, char* argv[]) {
 	delta = -6;
 	deltaOrientation = horizontal;
 
-	adjacentCoord = retrieve_adjacent_coord(periodic_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(periodic_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
 		anchor.row, anchor.column, adjacentCoord.row, 
 		adjacentCoord.column, delta, deltaOrientation);
 
-	adjacentCoord = retrieve_adjacent_coord(reflective_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(reflective_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
@@ -47,14 +47,14 @@ int main(int argc, char* argv[]) {
 	delta = 6;
 	deltaOrientation = horizontal;
 
-	adjacentCoord = retrieve_adjacent_coord(periodic_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(periodic_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
 		anchor.row, anchor.column, adjacentCoord.row, 
 		adjacentCoord.column, delta, deltaOrientation);
 
-	adjacentCoord = retrieve_adjacent_coord(reflective_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(reflective_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
@@ -68,14 +68,14 @@ int main(int argc, char* argv[]) {
 	delta = -6;
 	deltaOrientation = vertical;
 
-	adjacentCoord = retrieve_adjacent_coord(periodic_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(periodic_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
 		anchor.row, anchor.column, adjacentCoord.row, 
 		adjacentCoord.column, delta, deltaOrientation);
 
-	adjacentCoord = retrieve_adjacent_coord(reflective_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(reflective_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
@@ -89,14 +89,14 @@ int main(int argc, char* argv[]) {
 	delta = 6;
 	deltaOrientation = vertical;
 
-	adjacentCoord = retrieve_adjacent_coord(periodic_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(periodic_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 
 		anchor.row, anchor.column, adjacentCoord.row, 
 		adjacentCoord.column, delta, deltaOrientation);
 
-	adjacentCoord = retrieve_adjacent_coord(reflective_lattice, rows, 
+	adjacentCoord = lattice_retrieved_adjacent_coord(reflective_lattice, rows, 
 		columns, anchor, delta, deltaOrientation);
 
 	printf("Anchor: (%d, %d), Adj: (%d, %d), Delta: %d, Orient: %d\n", 

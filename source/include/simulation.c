@@ -49,7 +49,7 @@ void performMotilityEvents(lattice_t* lattice, unsigned int rows,
 				agentNum++;
 		}
 
-		agentPosition = retrieve_agent_coord(lattice, rows, columns, 
+		agentPosition = lattice_retrieve_agent_coord(lattice, rows, columns, 
 			agentNum, nodeAgentIndex);
 		agentId = lattice_get_agent(lattice, agentPosition, *nodeAgentIndex);
 
@@ -72,7 +72,7 @@ void performMotilityEvents(lattice_t* lattice, unsigned int rows,
 	// attempt to track agent movement
 	coordinate_t trackedCoord;
 	for (int i = 0; i < numTrackedAgents; i++) {
-		trackedCoord = find_agent(lattice, rows, columns, &trackedAgentIds[i]);
+		trackedCoord = lattice_find_agent(lattice, rows, columns, &trackedAgentIds[i]);
 
 		if (trackedCoord.row <= rows && trackedCoord.column <= columns) {
 			trackedPositions[i] = trackedCoord;
@@ -129,7 +129,7 @@ void performProliferationEvents(lattice_t* lattice, unsigned int rows,
 			agentNum++;
 		}
 
-		agentPosition = retrieve_agent_coord(lattice, rows, columns, 
+		agentPosition = lattice_retrieve_agent_coord(lattice, rows, columns, 
 			agentNum, nodeAgentIndex);
 		agentId = lattice_get_agent(lattice, agentPosition, *nodeAgentIndex);
 
@@ -137,7 +137,7 @@ void performProliferationEvents(lattice_t* lattice, unsigned int rows,
 		if (randomNumbers[randomNumIndex++] < (float)proliferationProbability) {
 
 			*parentCoord = agentPosition;
-			*daughterCoord = agentPosition;			
+			*daughterCoord = agentPosition;		
 
 			determineProliferationLocations(lattice, rows, columns, 
 				proliferationType, proliferationDelta, randomNumbers[randomNumIndex++], 
@@ -170,7 +170,7 @@ void performProliferationEvents(lattice_t* lattice, unsigned int rows,
 	// attempt to track agent movement
 	coordinate_t trackedCoord;
 	for (int i = 0; i < numTrackedAgents; i++) {
-		trackedCoord = find_agent(lattice, rows, columns, &trackedAgentIds[i]);
+		trackedCoord = lattice_find_agent(lattice, rows, columns, &trackedAgentIds[i]);
 
 		if (trackedCoord.row <= rows && trackedCoord.column <= columns) {
 			trackedPositions[i] = trackedCoord;
@@ -208,7 +208,7 @@ coordinate_t determineAgentMoveLocation(lattice_t* lattice, unsigned int rows,
 		deltaOrientation = horizontal;
 	}
 
-	return retrieve_adjacent_coord(lattice, rows, columns, anchor, delta, 
+	return lattice_retrieved_adjacent_coord(lattice, rows, columns, anchor, delta, 
 		deltaOrientation);
 }
 
@@ -254,8 +254,8 @@ void determineProliferationLocations(lattice_t* lattice, unsigned int rows,
 		break;
 	}
 
-	*parentCoord = retrieve_adjacent_coord(lattice, rows, columns, 
+	*parentCoord = lattice_retrieved_adjacent_coord(lattice, rows, columns, 
 		*parentCoord, parentDelta, deltaOrientation);
-	*daughterCoord = retrieve_adjacent_coord(lattice, rows, columns, 
+	*daughterCoord = lattice_retrieved_adjacent_coord(lattice, rows, columns, 
 		*daughterCoord, daughterDelta, deltaOrientation);
 }

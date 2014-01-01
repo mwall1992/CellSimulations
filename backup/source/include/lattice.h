@@ -71,14 +71,14 @@ void lattice_move_agent(lattice_t* lattice, coordinate_t oldPosition,
 
 void lattice_clear_agents(lattice_t* lattice, coordinate_t coord);
 
-coordinate_t retrieve_adjacent_coord(lattice_t* lattice, 
+coordinate_t lattice_retrieved_adjacent_coord(lattice_t* lattice, 
 	unsigned int rows, unsigned int columns, coordinate_t anchor,
 	int delta, orientation_t deltaOrientation);
 
-coordinate_t retrieve_agent_coord(lattice_t* lattice, unsigned int rows, 
+coordinate_t lattice_retrieve_agent_coord(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns, unsigned int orderedPosition, unsigned int* agentIndex);
 
-coordinate_t find_agent(lattice_t* lattice, unsigned int rows, 
+coordinate_t lattice_find_agent(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns, void* value);
 
 #endif

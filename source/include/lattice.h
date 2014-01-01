@@ -51,7 +51,7 @@ void lattice_destroy(lattice_t** lattice, unsigned int rows,
 void lattice_clear(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns, bool const freeMemory);
 
-void* lattice_get_agent(lattice_t* lattice, coordinate_t coord,
+int* lattice_get_agent(lattice_t* lattice, coordinate_t coord,
 	unsigned int index);
 
 unsigned int lattice_get_total_agent_count(lattice_t* lattice, unsigned int rows, 
@@ -61,7 +61,7 @@ unsigned int lattice_get_agent_count(lattice_t* lattice,
 	coordinate_t coord);
 
 void lattice_push_agent(lattice_t* lattice, coordinate_t coord, 
-	void* value);
+	int* value);
 
 void lattice_delete_agent(lattice_t* lattice, coordinate_t coord, 
 	unsigned int index, bool const freeMemory);
@@ -72,14 +72,14 @@ void lattice_move_agent(lattice_t* lattice, coordinate_t oldPosition,
 void lattice_clear_agents(lattice_t* lattice, coordinate_t coord, 
 	bool const freeMemory);
 
-coordinate_t retrieve_adjacent_coord(lattice_t* lattice, 
+coordinate_t lattice_retrieved_adjacent_coord(lattice_t* lattice, 
 	unsigned int rows, unsigned int columns, coordinate_t anchor,
 	int delta, orientation_t deltaOrientation);
 
-coordinate_t retrieve_agent_coord(lattice_t* lattice, unsigned int rows, 
+coordinate_t lattice_retrieve_agent_coord(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns, unsigned int orderedPosition, unsigned int* agentIndex);
 
-coordinate_t find_agent(lattice_t* lattice, unsigned int rows, 
-	unsigned int columns, void* value);
+coordinate_t lattice_find_agent(lattice_t* lattice, unsigned int rows, 
+	unsigned int columns, int* value);
 
 #endif
