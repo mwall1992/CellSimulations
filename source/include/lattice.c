@@ -28,6 +28,9 @@ lattice_t* lattice_create(unsigned int rows, unsigned int columns,
 			(*lattice->mesh)[i][j] = (point_t*)malloc(sizeof(point_t));
 			(*lattice->mesh)[i][j]->numAgents = 0;
 			(*lattice->mesh)[i][j]->agentList = linked_list_create();
+			(*lattice->mesh)[i][j]->positionSpecified = false;
+			(*lattice->mesh)[i][j]->x = 0.0;
+			(*lattice->mesh)[i][j]->y = 0.0;
 		}
 	}
 
@@ -69,6 +72,35 @@ int* lattice_get_agent(lattice_t* lattice, coordinate_t coord,
 
 	point_t* point = (*lattice->mesh)[coord.row][coord.column];
 	return linked_list_get(point->agentList, index);
+}
+
+void lattice_specify_position(lattice_t* lattice, coordinate_t coord,
+	double x, double y) {
+
+	point_t* point = (*lattice->mesh)[coord.row][coord.column];
+	point->positionSpecified = true;
+	point->x = x;
+	point->y = y;
+}
+
+void lattice_remove_specified_position(lattice_t* lattice, coordinate_t coord) {
+	point_t* point = (*lattice->mesh)[coord.row][coord.column];
+	point->positionSpecified = false;
+	point->x = 0.0;
+	point->y = 0.0;
+}
+
+bool lattice_get_specified_position(lattice_t* lattice, coordinate_t coord,
+	double* x, double* y) {
+
+	point_t* point = (*lattice->mesh)[coord.row][coord.column];
+	bool positionSpecified = point->positionSpecified;
+
+	if (positionSpecified) {
+		*x = point->x;
+		*y = point->y;
+	}
+	return positionSpecified;
 }
 
 unsigned int lattice_get_agent_count(lattice_t* lattice, 

@@ -247,3 +247,29 @@ void determineProliferationLocations(lattice_t* lattice, unsigned int rows,
 	*daughterCoord = lattice_retrieved_adjacent_coord(lattice, rows, columns, 
 		*daughterCoord, daughterDelta, deltaOrientation);
 }
+
+double* determineColumnAgentDensity(lattice_t* lattice, unsigned int rows,
+	unsigned int columns) {
+
+	double* agentColumnDensities = malloc(columns * sizeof(double));
+
+	int agentOccupancyCount;
+	coordinate_t coord;
+
+	for (int i = 0; i < columns; i++) {
+
+		agentOccupancyCount = 0;
+		for (int j = 0; j < rows; j++) {
+			coord.row = j;
+			coord.column = i;
+
+			if (lattice_get_agent_count(lattice, coord)) {
+				agentOccupancyCount++;
+			}
+		}
+
+		agentColumnDensities[i] = (double)agentOccupancyCount / (double)rows;
+	}
+
+	return agentColumnDensities;
+}

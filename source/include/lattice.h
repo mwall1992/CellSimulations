@@ -1,6 +1,7 @@
 #ifndef _lattice_h
 #define _lattice_h
 
+#include <stdbool.h>
 #include "linked_list.h"
 
 typedef enum boundary boundary_t;
@@ -29,6 +30,9 @@ typedef struct point point_t;
 struct point {
 	unsigned int numAgents;
 	node_t* agentList;
+	double x;
+	double y;
+	bool positionSpecified;
 };
 
 typedef struct lattice lattice_t;
@@ -53,6 +57,14 @@ void lattice_clear(lattice_t* lattice, unsigned int rows,
 
 int* lattice_get_agent(lattice_t* lattice, coordinate_t coord,
 	unsigned int index);
+
+void lattice_specify_position(lattice_t* lattice, coordinate_t coord,
+	double x, double y);
+
+void lattice_remove_specified_position(lattice_t* lattice, coordinate_t coord);
+
+bool lattice_get_specified_position(lattice_t* lattice, coordinate_t coord,
+	double* x, double* y);
 
 unsigned int lattice_get_total_agent_count(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns);

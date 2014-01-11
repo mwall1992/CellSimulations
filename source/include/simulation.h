@@ -31,4 +31,7 @@ void determineProliferationLocations(lattice_t* lattice, unsigned int rows,
 	unsigned int proliferationDelta, float directionProb, 
 	coordinate_t* parentCoord, coordinate_t* daughterCoord);
 
+double* determineColumnAgentDensity(lattice_t* lattice, unsigned int rows,
+	unsigned int columns);
+
 #endif
