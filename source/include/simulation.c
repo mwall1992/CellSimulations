@@ -8,6 +8,8 @@
 #define BRNG VSL_BRNG_MCG31
 #define RANDOM_NUMS_PER_EVENT 3
 
+#define HORIZONTAL_ONLY 1
+
 void performMotilityEvents(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns, double motilityProbability, double xShiftPreference, 
 	double yShiftPreference, bool agentExclusion, int* trackedAgentIds, 
@@ -184,16 +186,25 @@ coordinate_t determineAgentMoveLocation(lattice_t* lattice, unsigned int rows,
 	float xPreferenceBound = (float)(1 - xShiftPreference) / 4.0;
 	float yPreferenceBound = (float)(1 - yShiftPreference) / 4.0;
 
-	if (directionProb < yPreferenceBound) {
-		delta *= -1;
-		deltaOrientation = vertical;
-	} else if (directionProb < 1.0/2.0) {
-		deltaOrientation = vertical;
-	} else if (directionProb < 1.0/2.0 + xPreferenceBound) {
-		delta *= -1;
-		deltaOrientation = horizontal;
+	if (HORIZONTAL_ONLY) {
+		if (directionProb < 1.0/2.0) {
+			delta *= -1;
+			deltaOrientation = horizontal;
+		} else {
+			deltaOrientation = horizontal;
+		}
 	} else {
-		deltaOrientation = horizontal;
+		if (directionProb < yPreferenceBound) {
+			delta *= -1;
+			deltaOrientation = vertical;
+		} else if (directionProb < 1.0/2.0) {
+			deltaOrientation = vertical;
+		} else if (directionProb < 1.0/2.0 + xPreferenceBound) {
+			delta *= -1;
+			deltaOrientation = horizontal;
+		} else {
+			deltaOrientation = horizontal;
+		}
 	}
 
 	return lattice_retrieved_adjacent_coord(lattice, rows, columns, anchor, delta, 
