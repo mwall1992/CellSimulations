@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 
 	// construct lattice
 	unsigned int rows = 1;
-	unsigned int columns = 40;
+	unsigned int columns = 200;
 	lattice_t* lattice = lattice_create(rows, columns, 
 		periodic, periodic, periodic, periodic);
 
@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
 	coordinate_t coord;
 
 	// initialise loop variables
-	unsigned int const kRandomLattices = 5;
 	bool trackedLatticeLayout;
 	char latticeLayoutFileName[50];
 	char trackedAgentFileName[50];
@@ -54,7 +53,7 @@ int main(int argc, char* argv[]) {
 	bool agentExclusion = true;
 
 	// generation random lattices
-	for (int i = 0; i < kRandomLattices; i++) {
+	for (int i = 0; i < kNumBounds; i++) {
 		
 		// generate any required random numbers (uniform dist)
 		vslNewStream(&stream, BRNG, arc4random());	
@@ -93,12 +92,12 @@ int main(int argc, char* argv[]) {
 			int* agentId = malloc(sizeof(int));
 			*agentId = 1;
 
-			coordinate_t agentPos = { .row = 0, .column = 19 };
+			coordinate_t agentPos = { .row = 0, .column = columns/2 };
 			lattice_push_agent(lattice, agentPos, agentId);
 
 			// set up tracking information
 			numTrackedAgents = 1;
-			timeSteps = 40;
+			timeSteps = 500;
 
 			coordinate_t** trackedPositions =  malloc((timeSteps + 1) * sizeof(coordinate_t*));
 			for (int i = 0; i < timeSteps + 1; i++) {
