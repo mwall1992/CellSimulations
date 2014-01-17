@@ -32,7 +32,7 @@ INCLUDE_DIR = $(SOURCE_DIR)/include
 BACKUP_DIR = backup
 
 # Files
-DRIVER_FILE = $(SOURCE_DIR)/simulation_single_perturbed_lattices_1d.c
+DRIVER_FILE = $(SOURCE_DIR)/simulation_avg_over_lattices_perturbed.c
 INCLUDE_FILES = $(shell find $(INCLUDE_DIR) -name *.c) \
 	$(shell find $(INCLUDE_DIR) -name *.h)
 FILES = $(DRIVER_FILE) $(INCLUDE_FILES)
