@@ -33,7 +33,8 @@ int main(int argc, char* argv[]) {
 	coordinate_t coord;
 
 	// initialise loop variables
-	unsigned int const kRandomLattices = 100;
+	unsigned int const kRepeatCount = 100;
+	unsigned int const kRandomLattices = 1;
 	bool trackedLatticeLayout;
 	char latticeLayoutFileName[50];
 	char trackedAgentFileName[50];
@@ -76,9 +77,7 @@ int main(int argc, char* argv[]) {
 				columns, i + 1);
 			trackedLatticeLayout = lattice_parser_node_positions(lattice, rows, 
 				columns, latticeLayoutFileName, "output/");
-			if (trackedLatticeLayout) {
-				printf("Stored lattice layout information (case %d).\n", i + 1);
-			} else {
+			if (!trackedLatticeLayout) {
 				printf("Error: failed storing lattice layout information (case %d).\n", 
 					i + 1);
 			}
@@ -88,50 +87,53 @@ int main(int argc, char* argv[]) {
 		bool performSimulation = true;
 		if (performSimulation) {
 
-			// populate lattice
-			int* agentId = malloc(sizeof(int));
-			*agentId = 1;
+			// perform simulations
+			for (int j = 0; j < kRepeatCount; j++) {
 
-			coordinate_t agentPos = { .row = 0, .column = columns/2 };
-			lattice_push_agent(lattice, agentPos, agentId);
+				// populate lattice
+				int* agentId = malloc(sizeof(int));
+				*agentId = 1;
 
-			// set up tracking information
-			numTrackedAgents = 1;
-			timeSteps = 500;
+				coordinate_t agentPos = { .row = 0, .column = columns/2 };
+				lattice_push_agent(lattice, agentPos, agentId);
 
-			coordinate_t** trackedPositions =  malloc((timeSteps + 1) * sizeof(coordinate_t*));
-			for (int i = 0; i < timeSteps + 1; i++) {
-				trackedPositions[i] = malloc(numTrackedAgents * sizeof(coordinate_t));
+				// set up tracking information
+				numTrackedAgents = 1;
+				timeSteps = 500;
+
+				coordinate_t** trackedPositions =  malloc((timeSteps + 1) * sizeof(coordinate_t*));
+				for (int i = 0; i < timeSteps + 1; i++) {
+					trackedPositions[i] = malloc(numTrackedAgents * sizeof(coordinate_t));
+				}
+
+				trackedAgentIds = malloc(numTrackedAgents * sizeof(int));
+				trackedAgentIds[0] = 1;
+				trackedPositions[0][0] = agentPos;
+
+				// perform simulation
+				for (int i = 1; i < timeSteps + 1; i++) {
+					performMotilityEvents(lattice, rows, columns, motilityProbability, 
+						xShiftPreference, yShiftPreference, agentExclusion, 
+						trackedAgentIds, numTrackedAgents, trackedPositions[i]);
+				}
+
+				// save tracking information
+				sprintf(trackedAgentFileName, "tracked_agent_pos_%d_%d_%d.txt", 
+					columns, i + 1, j + 1);
+				bool isTracked =  tracked_agents_parser(trackedPositions, 
+					timeSteps + 1, 0, trackedAgentFileName, "output/");
+				if (!isTracked) {
+					printf("Error: failed storing tracking information (case: %d %d).\n", 
+						i + 1, j + 1);
+				}
+
+				// clear lattice and deallocate memory
+				lattice_clear(lattice, rows, columns, true);
+				for (int i = 0; i < timeSteps + 1; i++) {
+					free(trackedPositions[i]);
+				}
+				free(trackedPositions);
 			}
-
-			trackedAgentIds = malloc(numTrackedAgents * sizeof(int));
-			trackedAgentIds[0] = 1;
-			trackedPositions[0][0] = agentPos;
-
-			// perform simulation
-			for (int i = 1; i < timeSteps + 1; i++) {
-				performMotilityEvents(lattice, rows, columns, motilityProbability, 
-					xShiftPreference, yShiftPreference, agentExclusion, 
-					trackedAgentIds, numTrackedAgents, trackedPositions[i]);
-			}
-
-			// save tracking information
-			sprintf(trackedAgentFileName, "tracked_agent_pos_%d_%d.txt", 
-				columns, i + 1);
-			bool isTracked =  tracked_agents_parser(trackedPositions, 
-				timeSteps + 1, 0, trackedAgentFileName, "output/");
-			if (isTracked) {
-				printf("Stored tracking information.\n");
-			} else {
-				printf("Error: failed storing tracking information.\n");
-			}
-
-			// clear lattice and deallocate memory
-			lattice_clear(lattice, rows, columns, true);
-			for (int i = 0; i < timeSteps + 1; i++) {
-				free(trackedPositions[i]);
-			}
-			free(trackedPositions);
 		}
 	}
 
