@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) {
 	coordinate_t coord;
 
 	// initialise loop variables
-	unsigned int const kRepeatCount = 100;
-	unsigned int const kRandomLattices = 1;
+	unsigned int const kRepeatCount = 1;
+	unsigned int const kRandomLattices = 1000;
 	bool trackedLatticeLayout;
 	char latticeLayoutFileName[50];
 	char trackedAgentFileName[50];

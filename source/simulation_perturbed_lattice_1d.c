@@ -24,10 +24,10 @@ int main(int argc, char* argv[]) {
 		periodic, periodic, periodic, periodic);
 
 	// initialise lattice positioning
-	unsigned int const kNumBounds = 5;
+	unsigned int const kNumBounds = 1;
 	unsigned int const kBoundRepeatCount = 1;
-	unsigned int const kRepeatCount = 100;
-	double bounds[] = { 0.1, 0.2, 0.3, 0.4, 0.5 };
+	unsigned int const kRepeatCount = 1000;
+	double bounds[] = { 0.5 };
 
 	// initialise random number storage
 	VSLStreamStatePtr stream;
