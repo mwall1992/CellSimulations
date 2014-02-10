@@ -27,10 +27,10 @@ int main(int argc, char* argv[]) {
 	unsigned int const kNumBounds = 1;
 	unsigned int const kBoundRepeatCount = 1;
 	unsigned int const kRepeatCount = 2000;
-	double bounds[] = { 0.1 };
+	double bounds[] = { 0.3 };
 
 	// set temporal properties
-	unsigned int timeSteps = 200;
+	unsigned int timeSteps = 1000;
 
 	// initialise random number storage
 	VSLStreamStatePtr stream;
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 		for (int boundRepeatCount = 0; 
 			boundRepeatCount < kBoundRepeatCount; boundRepeatCount++) {
 
-			float randomSeed = 874595;
+			float randomSeed = 982743;
 
 			// generate any required random numbers (uniform dist)
 			vslNewStream(&stream, BRNG, randomSeed);	
@@ -84,8 +84,8 @@ int main(int argc, char* argv[]) {
 			// save node locations
 			bool saveNodeLocations = true;
 			if (saveNodeLocations) {
-				sprintf(latticeLayoutFileName, "node_positions_%0.02f_%d_%d.txt", 
-					bounds[i], boundRepeatCount, repeatCount);
+				sprintf(latticeLayoutFileName, "node_positions_%0.02f_%d.txt", 
+					bounds[i], i);
 				trackedLatticeLayout = lattice_parser_node_positions(lattice, rows, 
 					columns, latticeLayoutFileName, "output/");
 				if (!trackedLatticeLayout) {
@@ -123,6 +123,8 @@ int main(int argc, char* argv[]) {
 							xShiftPreference, yShiftPreference, agentExclusion, 
 							trackedAgentIds, numTrackedAgents, trackedPositions);
 					}
+
+					int boundRepeatCount = 0;
 
 					// Save tracked information
 					sprintf(latticeProfileFilename, "lattice_profile_%0.02f_%d_%d.txt", 
