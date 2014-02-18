@@ -7,6 +7,9 @@
 bool lattice_profile_parser(lattice_t* lattice, unsigned int rows, 
 	unsigned int columns, char* filename, char* directory);
 
+bool lattice_occupancy_parser(lattice_t* lattice, unsigned int rows, 
+	unsigned int columns, char* filename, char* directory);
+
 bool lattice_parser_node_positions(lattice_t* lattice, unsigned int rows,
 	unsigned int columns, char* filename, char* directory);
 

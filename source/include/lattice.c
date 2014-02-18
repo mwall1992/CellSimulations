@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include <stdio.h>
+
 /* Interface */
 
 unsigned int lattice_determine_adjacent_coord_index(unsigned int index, int delta, 
@@ -107,7 +109,8 @@ unsigned int lattice_get_agent_count(lattice_t* lattice,
 	coordinate_t coord) {
 
 	point_t* point = (*lattice->mesh)[coord.row][coord.column];
-	return point->numAgents;
+	return linked_list_size(point->agentList);
+	// return point->numAgents;
 }
 
 unsigned int lattice_get_total_agent_count(lattice_t* lattice, unsigned int rows, 
@@ -145,6 +148,8 @@ void lattice_delete_agent(lattice_t* lattice, coordinate_t coord,
 
 	if (*deleted) {
 		point->numAgents--;
+	} else {
+		printf("Nothing deleted!\n");
 	}
 
 	free(deleted);
@@ -247,6 +252,7 @@ coordinate_t lattice_retrieve_agent_coord(lattice_t* lattice, unsigned int rows,
 	unsigned int columns, unsigned int orderedPosition, unsigned int* agentIndex) {
 
 	if (orderedPosition > lattice_get_total_agent_count(lattice, rows, columns)) {
+		printf("Error: attempted to retrieve non-existent agent.\n");
 		coordinate_t notFoundCoord = { .row = rows + 1, .column = columns + 1 };
 		return notFoundCoord;
 	}

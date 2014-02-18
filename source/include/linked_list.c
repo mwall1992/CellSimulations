@@ -71,8 +71,9 @@ node_t* linked_list_delete(node_t* list, unsigned int index, bool* deleted,
 			currentNode = currentNode->next;
 		}
 
+		// handle a member within the list that is not the head
 		if (currentParent) {
-			list = currentParent;
+			// list = currentParent;
 			currentParent->next = currentNode->next;
 			
 			if (freeMemory) {
@@ -81,15 +82,30 @@ node_t* linked_list_delete(node_t* list, unsigned int index, bool* deleted,
 			
 			free(currentNode);
 			currentNode = NULL;
+
+		// handle the head of the list
 		} else {
 
 			if (!currentNode->next) {
 				list = currentNode;
-				list->value = NULL;
+				
+				if (freeMemory) {
+					free(currentNode->value);	
+				}
+				
+				currentNode->value = NULL;
 			} else {
 				list = currentNode->next;
+
+				if (freeMemory) {
+					free(currentNode->value);
+				}
+
+				free(currentNode);
+				currentNode = NULL;
 			}
 		}
+
 	} else {
 		*deleted = false;
 	}

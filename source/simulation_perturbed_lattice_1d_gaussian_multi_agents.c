@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 	double motilityProbability = 1.0;
 	double xShiftPreference = 0;
 	double yShiftPreference = 0;
-	bool agentExclusion = true;
+	bool agentExclusion = false;
 
 	// generation random lattices
 	for (int stdDevIndex = 0; stdDevIndex < kNumStdDevs; stdDevIndex++) {
@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
 			// save node locations
 			bool saveNodeLocations = true;
 			if (saveNodeLocations) {
-				sprintf(latticeLayoutFileName, "node_positions_%0.02f_%d.txt", 
+				sprintf(latticeLayoutFileName, "node_positions_%0.02f_%d_ghosts.txt", 
 					stddevs[stdDevIndex], boundRepeatCount);
 				trackedLatticeLayout = lattice_parser_node_positions(lattice, rows, 
 					columns, latticeLayoutFileName, "output/");
@@ -129,9 +129,9 @@ int main(int argc, char* argv[]) {
 						for (int j = 0; j < kTimeSetsNum; j++) {
 							if (timeStep == timeSets[j]-1) {
 								// store lattice profile
-								sprintf(latticeProfileFilename, "lattice_profile_%0.02f_%d_%d_%d.txt", 
+								sprintf(latticeProfileFilename, "lattice_profile_%0.02f_%d_%d_%d_ghosts.txt", 
 									stddevs[stdDevIndex], boundRepeatCount, repeatCount, timeStep+1);
-								bool isTracked = lattice_profile_parser(lattice, rows, columns, 
+								bool isTracked = lattice_occupancy_parser(lattice, rows, columns, 
 									latticeProfileFilename, "output/");
 								if (!isTracked) {
 									printf("Error: failed to store lattice profile.\n");

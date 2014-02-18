@@ -65,6 +65,10 @@ void performMotilityEvents(lattice_t* lattice, unsigned int rows,
 		}
 	}
 
+	if (lattice_get_total_agent_count(lattice, rows, columns) != initialAgentCount) {
+		printf("Error: lost agents.\n");
+	}
+
 	// attempt to track agent movement
 	coordinate_t trackedCoord;
 	for (int i = 0; i < numTrackedAgents; i++) {
