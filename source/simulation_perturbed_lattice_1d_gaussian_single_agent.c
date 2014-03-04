@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 	// initialise lattice positioning
 	unsigned int const kNumStdDevs = 5;
 	unsigned int const kStdDevsRepeatCount = 1;
-	unsigned int const kRepeatCount = 1000;
+	unsigned int const kRepeatCount = 2000;
 	double stddevs[] = { 0.1, 0.2, 0.3, 0.4, 0.5 };
 
 	// initialise random number storage
